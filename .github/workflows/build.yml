@@ -1,0 +1,42 @@
+name: build
+
+on:
+  push:
+
+jobs:
+  linux:
+    runs-on: ubuntu-16.04
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64, armhf, arm64, alpine, stretch-arm64, stretch-armhf, buster-arm64, buster-armhf]
+        include:
+        - arch: armhf
+          qemu: 'true'
+        - arch: arm64
+          qemu: 'true'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: docker/setup-qemu-action@v1
+        if: matrix.qemu == 'true'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ matrix.arch }}
+          file: ${{ matrix.arch }}/Dockerfile
+          tags: vscodium/vscodium-linux-build-agent:${{ matrix.arch }}
+          push: ${{ github.ref == 'refs/heads/master' }}

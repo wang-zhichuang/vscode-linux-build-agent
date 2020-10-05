@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   pkg-config \
   fakeroot \
   rpm \
+  jq \
   ca-certificates \
   libx11-dev:armhf \
   libx11-xcb-dev:armhf \

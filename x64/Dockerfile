@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   createrepo \
   python-gtk2 \
   jq \
+  imagemagick \
   xvfb \
   fakeroot \
   libgtk2.0-0 \

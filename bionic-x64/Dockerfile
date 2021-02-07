@@ -87,7 +87,7 @@ COPY init-dbus.sh /usr/local/share/
 RUN mkdir -p /var/run/dbus \
 	&& chmod +x /usr/local/share/init-dbus.sh
 
-USER builduser
-WORKDIR /home/builduser
+# USER builduser
+# WORKDIR /home/builduser
 
 ENTRYPOINT ["/usr/local/share/init-dbus.sh"] 

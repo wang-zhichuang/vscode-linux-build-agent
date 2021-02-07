@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, armhf, arm64, alpine, stretch-arm64, stretch-armhf, buster-arm64, buster-armhf]
+        arch: [bionic-x64, trusty-x64, armhf, arm64, alpine, stretch-arm64, stretch-armhf, buster-arm64, buster-armhf]
         include:
         - arch: armhf
           qemu: 'true'

@@ -1,5 +1,9 @@
 FROM debian:stretch
 
+# add backports
+RUN echo "deb http://deb.debian.org/debian stretch-backports main" | tee -a /etc/apt/sources.list
+RUN apt-get update && apt-get install -y -t stretch-backports git git-man
+
 RUN dpkg --add-architecture armhf
 RUN apt-get update && apt-get install -y --no-install-recommends \
   crossbuild-essential-armhf \

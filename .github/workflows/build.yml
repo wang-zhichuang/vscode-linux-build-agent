@@ -9,18 +9,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [bionic-x64, trusty-x64, armhf, arm64, alpine, stretch-arm64, stretch-armhf, buster-arm64, buster-armhf]
-        include:
-        - arch: armhf
-          qemu: 'true'
-        - arch: arm64
-          qemu: 'true'
+        arch:
+          - bionic-x64
+          - centos7-devtoolset8-arm64
+          - centos7-devtoolset8-x64
+          - stretch-arm64
+          - stretch-armhf
 
     steps:
       - uses: actions/checkout@v2
-
-      - uses: docker/setup-qemu-action@v1
-        if: matrix.qemu == 'true'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1

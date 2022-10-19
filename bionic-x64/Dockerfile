@@ -11,12 +11,9 @@ ENV TEMP=/tmp
 RUN chmod a+rwx /tmp
 
 # Core environment variables
-ENV DBUS_SESSION_BUS_ADDRESS="autolaunch:" \
-	LANG="en_US.UTF-8" \
+ENV LANG="en_US.UTF-8" \
 	LANGUAGE="en_US.UTF-8" \
-  LC_ALL="en_US.UTF-8" \
-	VISUAL="nano" \
-	EDITOR="nano"
+  LC_ALL="en_US.UTF-8"
 
 # Latest stable git
 RUN apt-get update && apt-get install -y software-properties-common
@@ -25,22 +22,15 @@ RUN add-apt-repository ppa:git-core/ppa -y
 RUN apt-get update && apt-get install -y \
     apt-transport-https \
     ca-certificates \
-    createrepo \
     curl \
-    g++-multilib \
-    gcc-5 \
-    g++-5 \
     git \
     gnome-keyring \
     iproute2 \
-    jq \
-    libatk-bridge2.0-0 \
     libfuse2 \
     libgconf-2-4 \
     libgdk-pixbuf2.0-0 \
     libgl1 \
     libgtk-3.0 \
-    libnotify-bin \
     libsecret-1-dev \
     libssl-dev \
     libx11-dev \
@@ -49,31 +39,30 @@ RUN apt-get update && apt-get install -y \
     locales \
     lsb-release \
     lsof \
-    policykit-1 \
     python-dbus \
-    python-gtk2 \
     python-pip \
     sudo \
     wget \
     xvfb \
     tzdata \
+    unzip \
+    # VSCodium
+    jq \
     imagemagick \
-    bc \
   && locale-gen en_US.UTF-8 \
   && curl https://chromium.googlesource.com/chromium/src/+/HEAD/build/install-build-deps.sh\?format\=TEXT | base64 --decode | cat > /setup/install-build-deps.sh \
   && chmod +x /setup/install-build-deps.sh \
   && bash /setup/install-build-deps.sh --syms --no-prompt --no-chromeos-fonts --no-arm --no-nacl \
   && rm -rf /var/lib/apt/lists/*
 
-# Install older gcc toolchain from Xenial
-RUN echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main"  | tee -a /etc/apt/sources.list
-RUN echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" | tee -a /etc/apt/sources.list
+# Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y yarn
 
-RUN apt-get update && apt-get install -y \
-    gcc-4.9 \
-    g++-4.9 \
-    gcc-4.8 \
-    g++-4.8
+# ripgrep (VSCodium)
+RUN wget -q https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+RUN dpkg -i ripgrep_13.0.0_amd64.deb
 
 # No Sudo Prompt
 RUN echo 'builduser ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-builduser \
@@ -84,17 +73,20 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
 RUN dpkg -i packages-microsoft-prod.deb
 RUN apt-get update && apt-get install -y dotnet-sdk-2.1
 
-# ripgrep
-RUN wget -q https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
-RUN dpkg -i ripgrep_13.0.0_amd64.deb
+# Set python3 as default
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+RUN python --version
 
-COPY init-dbus.sh /usr/local/share/
+# Add xvfb init script
+COPY xvfb-init.sh /etc/init.d/xvfb
+RUN chmod a+x /etc/init.d/xvfb
 
-# Update privs, owners of config files
-RUN mkdir -p /var/run/dbus \
-	&& chmod +x /usr/local/share/init-dbus.sh
+# Setup dbus path
+RUN sudo mkdir -p /var/run/dbus
 
-# USER builduser
-# WORKDIR /home/builduser
+# Check compiler toolchain
+RUN gcc --version
+RUN g++ --version
 
-ENTRYPOINT ["/usr/local/share/init-dbus.sh"]
+USER builduser
+WORKDIR /home/builduser

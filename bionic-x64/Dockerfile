@@ -88,5 +88,6 @@ RUN sudo mkdir -p /var/run/dbus
 RUN gcc --version
 RUN g++ --version
 
+# Disable user to it can run on GH (VSCodium)
 # USER builduser
 # WORKDIR /home/builduser

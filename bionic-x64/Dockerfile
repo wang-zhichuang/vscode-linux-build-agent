@@ -88,5 +88,5 @@ RUN sudo mkdir -p /var/run/dbus
 RUN gcc --version
 RUN g++ --version
 
-USER builduser
-WORKDIR /home/builduser
+# USER builduser
+# WORKDIR /home/builduser

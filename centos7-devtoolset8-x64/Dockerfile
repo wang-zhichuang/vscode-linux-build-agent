@@ -11,7 +11,8 @@ ARG INSTALL_PKGS="devtoolset-8-gcc \
     sudo \
     libsecret-devel \
     nodejs \
-    python3"
+    python3 \
+    jq "
 
 # setup nodejs repo
 RUN curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -

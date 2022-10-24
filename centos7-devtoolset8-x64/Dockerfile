@@ -26,8 +26,8 @@ RUN npm install -g npm@latest
 RUN npm install -g yarn
 
 # jq (VSCodium)
-RUN curl -L -O https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 \
-    chmod +x jq-linux64 \
+RUN curl -L -O https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && \
+    chmod +x jq-linux64 && \
     mv jq-linux64 /usr/bin/jq
 
 ENV PATH=/opt/rh/devtoolset-8/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

@@ -11,10 +11,10 @@ jobs:
       matrix:
         arch:
           - bionic-x64
+          - buster-arm64
+          - buster-armhf
           - centos7-devtoolset8-arm64
           - centos7-devtoolset8-x64
-          - stretch-arm64
-          - stretch-armhf
 
     steps:
       - uses: actions/checkout@v3

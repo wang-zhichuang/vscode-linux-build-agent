@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libx11-xcb-dev:ppc64el \
   libxkbfile-dev:ppc64el \
   libsecret-1-dev:ppc64el \
+  libkrb5-dev:ppc64el \
   curl \
   gnupg \
   unzip \

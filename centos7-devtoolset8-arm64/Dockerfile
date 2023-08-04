@@ -6,8 +6,10 @@ ARG INSTALL_PKGS="devtoolset-8-gcc \
     devtoolset-8-gdb \
     make \
     git \
+    unzip \
     sudo \
     libsecret-devel \
+    krb5-devel \
     nodejs \
     python3"
 
@@ -19,9 +21,10 @@ RUN yum install -y centos-release-scl-rh && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
 
-# update npm and install yarn
+# update npm and install yarn, node-gyp
 RUN npm install -g npm@latest
 RUN npm install -g yarn
+RUN npm install -g node-gyp
 
 # jq (VSCodium)
 RUN curl -L -O https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && \

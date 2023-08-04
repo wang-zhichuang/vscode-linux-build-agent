@@ -15,11 +15,11 @@ RUN sed -i "s/^deb/deb [arch=amd64,i386]/g" /etc/apt/sources.list
 RUN echo "deb [arch=arm64,armhf] http://ports.ubuntu.com/ bionic main universe multiverse restricted" | tee -a /etc/apt/sources.list
 RUN echo "deb [arch=arm64,armhf] http://ports.ubuntu.com/ bionic-security main universe multiverse restricted" | tee -a /etc/apt/sources.list
 RUN echo "deb [arch=arm64,armhf] http://ports.ubuntu.com/ bionic-updates main universe multiverse restricted" | tee -a /etc/apt/sources.list
-RUN dpkg --add-architecture armhf
+RUN dpkg --add-architecture arm64
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  gcc-8-arm-linux-gnueabihf \
-  g++-8-arm-linux-gnueabihf \
-  binutils-arm-linux-gnueabihf \
+  gcc-8-aarch64-linux-gnu \
+  g++-8-aarch64-linux-gnu \
+  binutils-aarch64-linux-gnu \
   build-essential \
   git \
   pkg-config \
@@ -28,18 +28,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   sudo \
   apt-transport-https \
   ca-certificates \
-  libx11-dev:armhf \
-  libx11-xcb-dev:armhf \
-  libxkbfile-dev:armhf \
-  libsecret-1-dev:armhf \
-  libkrb5-dev:armhf \
+  libx11-dev:arm64 \
+  libx11-xcb-dev:arm64 \
+  libxkbfile-dev:arm64 \
+  libsecret-1-dev:arm64 \
+  libkrb5-dev:arm64 \
   curl \
   gnupg \
-  unzip
-
-# No Sudo Prompt
-RUN echo 'builduser ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-builduser \
-  && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
+  unzip \
+  # VSCodium
+  jq
 
 # Disable user so it can run on GH (VSCodium)
 # # No Sudo Prompt
@@ -71,10 +69,10 @@ RUN sudo apt-get update && sudo apt-get install -y docker-ce
 # USER builduser
 # WORKDIR /home/builduser
 
-ENV AS=/usr/bin/arm-linux-gnueabihf-as \
-  AR=/usr/bin/arm-linux-gnueabihf-ar \
-  CC=/usr/bin/arm-linux-gnueabihf-gcc-8 \
-  CPP=/usr/bin/arm-linux-gnueabihf-cpp-8 \
-  CXX=/usr/bin/arm-linux-gnueabihf-g++-8 \
-  LD=/usr/bin/arm-linux-gnueabihf-ld \
-  PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
+ENV AS=/usr/bin/aarch64-linux-gnu-as \
+  AR=/usr/bin/aarch64-linux-gnu-ar \
+  CC=/usr/bin/aarch64-linux-gnu-gcc-8 \
+  CPP=/usr/bin/aarch64-linux-gnu-cpp-8 \
+  CXX=/usr/bin/aarch64-linux-gnu-g++-8 \
+  LD=/usr/bin/aarch64-linux-gnu-ld \
+  PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig

@@ -1,8 +1,6 @@
-FROM debian:stretch
-
-# add backports (VSCodium)
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" | tee -a /etc/apt/sources.list
-RUN apt-get update && apt-get install -y -t stretch-backports git git-man
+ARG REPO=debian
+ARG TAG=stretch
+FROM ${REPO}:${TAG}
 
 RUN dpkg --add-architecture arm64
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -32,9 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libc6-dev \
   libbz2-dev \
   libffi-dev \
-  zlib1g-dev \
-  # VSCodium
-  jq
+  zlib1g-dev
 
 # Compile python3.9 from source
 RUN curl -O https://www.python.org/ftp/python/3.9.4/Python-3.9.4.tar.xz

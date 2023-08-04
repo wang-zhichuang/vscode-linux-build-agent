@@ -35,11 +35,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libkrb5-dev:armhf \
   curl \
   gnupg \
-  unzip
-
-# No Sudo Prompt
-RUN echo 'builduser ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-builduser \
-  && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
+  unzip \
+  # VSCodium
+  jq
 
 # Disable user so it can run on GH (VSCodium)
 # # No Sudo Prompt

@@ -11,10 +11,9 @@ jobs:
       matrix:
         arch:
           - bionic-x64
+          - bionic-arm64
           - bionic-armhf
           - bionic-ppc64le
-          - buster-arm64
-          - buster-armhf
           - centos7-devtoolset8-arm64
           - centos7-devtoolset8-x64
 

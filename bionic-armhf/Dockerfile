@@ -36,7 +36,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   curl \
   gnupg \
   unzip \
-  # VSCodium
   jq
 
 # Disable user so it can run on GH (VSCodium)

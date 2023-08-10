@@ -44,6 +44,12 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y yarn
 
+# Node.js
+RUN curl --silent --location https://deb.nodesource.com/setup_16.x | sudo -E bash -
+RUN apt-get update && apt-get install -y nodejs
+RUN npm install -g npm@latest
+RUN npm install -g node-gyp
+
 ENV AS=/usr/bin/powerpc64le-linux-gnu-as \
   AR=/usr/bin/powerpc64le-linux-gnu-ar \
   CC=/usr/bin/powerpc64le-linux-gnu-gcc-8 \

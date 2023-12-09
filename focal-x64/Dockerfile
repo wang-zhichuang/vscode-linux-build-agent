@@ -14,6 +14,9 @@ RUN mkdir -p /setup
 ENV TEMP=/tmp
 RUN chmod a+rwx /tmp
 
+# Avoid prompt for keyboard layout
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
 # Latest stable git
 RUN apt-get update && apt-get install -y software-properties-common
 RUN add-apt-repository ppa:git-core/ppa -y

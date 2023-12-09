@@ -22,9 +22,7 @@ RUN yum install -y centos-release-scl-rh && \
     yum -y clean all --enablerepo='*'
 
 # update npm and install yarn, node-gyp
-RUN npm install -g npm@latest
-RUN npm install -g yarn
-RUN npm install -g node-gyp
+RUN npm install -g yarn node-gyp
 
 # jq (VSCodium)
 RUN curl -L -O https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && \

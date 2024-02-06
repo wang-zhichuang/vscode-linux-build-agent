@@ -68,14 +68,18 @@ RUN apt-get update && apt-get install -y \
 #   && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
 
 # NVM
+ENV NVM_VERSION v0.39.7
+ENV NVM_DIR /root/nvm
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+RUN mkdir $NVM_DIR
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-RUN export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && echo $PATH
 
 # Node.js
 RUN wget https://unofficial-builds.nodejs.org/download/release/v18.19.0/node-v18.19.0-linux-x64-glibc-217.tar.xz
 RUN tar -xf node-v18.19.0-linux-x64-glibc-217.tar.xz
 RUN mkdir -p ~/.nvm/versions/node && mv node-v18.19.0-linux-x64-glibc-217 ~/.nvm/versions/node/v18.99.0
-RUN . "$NVM_DIR/nvm.sh" && nvm use 18.99.0
+RUN nvm use 18.99.0
 RUN npm install -g npm@latest node-gyp yarn
 
 # Set python3 as default

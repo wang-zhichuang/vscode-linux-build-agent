@@ -73,8 +73,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
 # Node.js
 RUN wget https://unofficial-builds.nodejs.org/download/release/v18.19.0/node-v18.19.0-linux-x64-glibc-217.tar.xz
 RUN tar -xf node-v18.19.0-linux-x64-glibc-217.tar.xz
-RUN mv node-v18.19.0-linux-x64-glibc-217 ~/.nvm/versions/node/v18.99.99
-RUN nvm use 18.99.99
+RUN ls node-v18.19.0-linux-x64-glibc-217 && mkdir -p /.nvm/versions/node && mv node-v18.19.0-linux-x64-glibc-217 ~/.nvm/versions/node/v18.99.0
+RUN nvm use 18.99.0
 RUN npm install -g npm@latest node-gyp yarn
 
 # Set python3 as default

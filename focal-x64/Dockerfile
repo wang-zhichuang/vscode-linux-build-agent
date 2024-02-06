@@ -69,7 +69,7 @@ RUN apt-get update && apt-get install -y \
 
 # NVM
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-RUN export NVM_DIR="~/.nvm" && bash "$NVM_DIR/nvm.sh"
+RUN export NVM_DIR="$HOME/.nvm" && ls $NVM_DIR && ls /root/.nvm && bash "$NVM_DIR/nvm.sh"
 
 # Node.js
 RUN wget https://unofficial-builds.nodejs.org/download/release/v18.19.0/node-v18.19.0-linux-x64-glibc-217.tar.xz

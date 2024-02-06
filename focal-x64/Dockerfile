@@ -67,16 +67,15 @@ RUN apt-get update && apt-get install -y \
 # RUN echo 'builduser ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-builduser \
 #   && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
 
-# Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y yarn
+# NVM
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
 # Node.js
-RUN curl --silent --location https://deb.nodesource.com/setup_18.x | sudo -E bash -
-RUN apt-get update && apt-get install -y nodejs
-RUN npm install -g npm@latest
-RUN npm install -g node-gyp
+RUN wget https://unofficial-builds.nodejs.org/download/release/v18.19.0/node-v18.19.0-linux-x64-glibc-217.tar.xz
+RUN tar -xf node-v18.19.0-linux-x64-glibc-217.tar.xz
+RUN mv node-v18.19.0-linux-x64-glibc-217 ~/.nvm/versions/node/v18.99.99
+RUN nvm use 18.99.99
+RUN npm install -g npm@latest node-gyp yarn
 
 # Set python3 as default
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1

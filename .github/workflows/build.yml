@@ -10,14 +10,14 @@ jobs:
       fail-fast: false
       matrix:
         arch:
-          # - alpine-x64
-          # - alpine-arm64
+          - alpine-x64
+          - alpine-arm64
           - focal-x64
-          # - focal-arm64
-          # - focal-armhf
-          # - focal-ppc64le
-          # - centos7-devtoolset8-arm64
-          # - centos7-devtoolset8-x64
+          - focal-arm64
+          - focal-armhf
+          - focal-ppc64le
+          - centos7-devtoolset8-arm64
+          - centos7-devtoolset8-x64
 
     steps:
       - uses: actions/checkout@v3

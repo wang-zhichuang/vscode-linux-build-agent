@@ -67,20 +67,16 @@ RUN apt-get update && apt-get install -y \
 # RUN echo 'builduser ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-builduser \
 #   && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
 
-# NVM
-ENV NVM_VERSION v0.39.7
-ENV NVM_DIR /$HOME/.nvm
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-RUN mkdir $NVM_DIR
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+# Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y yarn
 
 # Node.js
-RUN wget https://unofficial-builds.nodejs.org/download/release/v18.19.0/node-v18.19.0-linux-x64-glibc-217.tar.xz
-RUN tar -xf node-v18.19.0-linux-x64-glibc-217.tar.xz
-RUN mkdir -p ~/.nvm/versions/node && mv node-v18.19.0-linux-x64-glibc-217 ~/.nvm/versions/node/v18.99.0
-RUN bash -c 'source $NVM_DIR/nvm.sh && nvm use 18.99.0'
-RUN npm install -g npm@latest node-gyp yarn
+RUN curl --silent --location https://deb.nodesource.com/setup_16.x | sudo -E bash -
+RUN apt-get update && apt-get install -y nodejs
+RUN npm install -g npm@latest
+RUN npm install -g node-gyp
 
 # Set python3 as default
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1

@@ -47,7 +47,6 @@ RUN apt-get update && apt-get install -y yarn
 # Node.js
 RUN curl --silent --location https://deb.nodesource.com/setup_16.x | sudo -E bash -
 RUN apt-get update && apt-get install -y nodejs
-RUN npm install -g npm@latest
 RUN npm install -g node-gyp
 
 ENV AS=/usr/bin/powerpc64le-linux-gnu-as \

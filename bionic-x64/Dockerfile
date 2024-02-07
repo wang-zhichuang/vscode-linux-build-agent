@@ -80,8 +80,7 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN python --version
 
 # Snapcraft
-RUN apt-get update && apt-get install -y snapd
-RUN snap install snapcraft --classic
+RUN apt-get update && apt-get install -y snapd snapcraft
 
 # Install docker client
 RUN sudo mkdir -m 0755 -p /etc/apt/keyrings

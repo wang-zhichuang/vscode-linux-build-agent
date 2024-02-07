@@ -59,9 +59,6 @@ RUN apt-get update && apt-get install -y nodejs
 RUN npm install -g npm@latest
 RUN npm install -g node-gyp
 
-# Snapcraft
-RUN apt-get update && apt-get install -y snapd snapcraft
-
 # Install docker client
 RUN sudo mkdir -m 0755 -p /etc/apt/keyrings
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg

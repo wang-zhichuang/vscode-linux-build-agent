@@ -76,9 +76,6 @@ RUN npm install -g npm@latest node-gyp yarn
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN python --version
 
-# Snapcraft
-RUN apt-get update && apt-get install -y snapd snapcraft
-
 # Install docker client
 RUN sudo mkdir -m 0755 -p /etc/apt/keyrings
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg

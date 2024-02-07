@@ -3,6 +3,7 @@ ARG TAG=18.04
 FROM ${REPO}:${TAG}
 
 ARG DEBIAN_FRONTEND=noninteractive
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 # Disable user so it can run on GH (VSCodium)
 # RUN groupadd --gid 1000 builduser \

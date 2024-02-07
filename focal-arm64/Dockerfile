@@ -60,7 +60,8 @@ RUN npm install -g npm@latest
 RUN npm install -g node-gyp
 
 # Snapcraft
-RUN sudo apt update && sudo apt install -y snapd
+RUN apt-get update && apt-get install -y snapd
+RUN snap install snapcraft --classic
 
 # Install docker client
 RUN sudo mkdir -m 0755 -p /etc/apt/keyrings

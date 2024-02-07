@@ -12,6 +12,10 @@ jobs:
         arch:
           - alpine-x64
           - alpine-arm64
+          - bionic-x64
+          - bionic-arm64
+          - bionic-armhf
+          - bionic-ppc64le
           - focal-x64
           - focal-arm64
           - focal-armhf

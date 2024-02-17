@@ -10,24 +10,29 @@ ARG INSTALL_PKGS="devtoolset-8-gcc \
     sudo \
     libsecret-devel \
     krb5-devel \
-    nodejs \
     python3"
+ARG NODE_VERSION="16.20.2"
 
-# setup nodejs repo
-RUN curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
-
-RUN yum install -y centos-release-scl-rh && \
-    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
+# setup dependencies
+RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
+
+# setup nodejs repo
+RUN curl -L -O https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-armv7l.tar.gz && \
+    tar -xzf node-v${NODE_VERSION}-linux-armv7l.tar.gz && \
+    cd node-v${NODE_VERSION}-linux-armv7l && \
+    sudo cp -R * /usr/local/ && \
+    rm -rf node-v${NODE_VERSION}-linux-armv7l* && \
+    node --version
 
 # update npm and install yarn, node-gyp
 RUN npm install -g yarn node-gyp
 
 # jq (VSCodium)
-RUN curl -L -O https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && \
-    chmod +x jq-linux64 && \
-    mv jq-linux64 /usr/bin/jq
+RUN curl -L -O https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux32 && \
+    chmod +x jq-linux32 && \
+    mv jq-linux32 /usr/bin/jq
 
 ENV PATH=/opt/rh/devtoolset-8/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

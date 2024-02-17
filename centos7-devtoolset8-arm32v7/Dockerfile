@@ -14,9 +14,9 @@ ARG INSTALL_PKGS="devtoolset-8-gcc \
 ARG NODE_VERSION="16.20.2"
 
 # setup dependencies
-RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    yum -y clean all --enablerepo='*'
+# RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
+#     rpm -V $INSTALL_PKGS && \
+#     yum -y clean all --enablerepo='*'
 
 # setup nodejs repo
 RUN curl -L -O https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-armv7l.tar.gz && \

@@ -22,7 +22,8 @@ ARG NODE_VERSION="16.20.2"
 RUN curl -L -O https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-armv7l.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-armv7l.tar.gz && \
     cd node-v${NODE_VERSION}-linux-armv7l && \
-    sudo cp -R * /usr/local/ && \
+    cp -R * /usr/local/ && \
+    cd .. && \
     rm -rf node-v${NODE_VERSION}-linux-armv7l* && \
     node --version
 

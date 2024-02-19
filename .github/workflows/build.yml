@@ -20,9 +20,9 @@ jobs:
           # - focal-arm64
           # - focal-armhf
           # - focal-ppc64le
-          - centos7-devtoolset8-arm32v7
+          # - centos7-devtoolset8-arm32v7
           - centos7-devtoolset8-arm64
-          - centos7-devtoolset8-ppc64le
+          # - centos7-devtoolset8-ppc64le
           - centos7-devtoolset8-x64
           - bionic-devtoolset-arm32v7
           - bionic-devtoolset-ppc64le

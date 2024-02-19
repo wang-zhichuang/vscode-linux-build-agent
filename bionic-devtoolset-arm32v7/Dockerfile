@@ -34,7 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   gnupg \
   unzip \
   # VSCodium
-  libatomic1 \
+  libatomic1:armhf \
   jq
 
 # Set python3 as default

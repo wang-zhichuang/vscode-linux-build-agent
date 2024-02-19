@@ -1,32 +1,46 @@
-FROM ppc64le/ubuntu:bionic
+ARG REPO=mcr.microsoft.com/mirror/docker/library/ubuntu
+ARG TAG=18.04
+FROM ${REPO}:${TAG}
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION="16.20.2"
 
+# ubuntu keeps its i386/amd64 and other architecture repos separate
+# the default i386/amd64 packages can be found in http://archive.ubuntu.com while all other architectures are in http://ports.ubuntu.com/
+# add the required repos for ppc64el and only fetch i386/amd64 from archive.ubuntu.com (to prevent apt from erroring about missing architecture support)
+RUN sed -i "s/^deb/deb [arch=amd64,i386]/g" /etc/apt/sources.list
+RUN echo "deb [arch=ppc64el] http://ports.ubuntu.com/ bionic main universe multiverse restricted" | tee -a /etc/apt/sources.list
+RUN echo "deb [arch=ppc64el] http://ports.ubuntu.com/ bionic-security main universe multiverse restricted" | tee -a /etc/apt/sources.list
+RUN echo "deb [arch=ppc64el] http://ports.ubuntu.com/ bionic-updates main universe multiverse restricted" | tee -a /etc/apt/sources.list
+RUN dpkg --add-architecture ppc64el
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  software-properties-common \
-  gcc \
-  g++ \
-  binutils \
+  gcc-8-powerpc64le-linux-gnu \
+  g++-8-powerpc64le-linux-gnu \
+  binutils-powerpc64le-linux-gnu \
   build-essential \
   git \
   pkg-config \
+  fakeroot \
+  rpm \
   sudo \
   apt-transport-https \
   ca-certificates \
+  libx11-dev:ppc64el \
+  libx11-xcb-dev:ppc64el \
+  libxkbfile-dev:ppc64el \
+  libsecret-1-dev:ppc64el \
+  libkrb5-dev:ppc64el \
   curl \
   gnupg \
-  make \
-  python3 \
-  libkrb5-dev \
   unzip \
+  # VSCodium
   jq
 
 # Set python3 as default
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN python --version
 
-# setup nodejs repo
+# Setup Node.js
 RUN curl -L -O https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-ppc64le.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-ppc64le.tar.gz && \
     cp -R node-v${NODE_VERSION}-linux-ppc64le/* /usr/local/ && \
@@ -36,3 +50,11 @@ RUN curl -L -O https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-li
 
 RUN mkdir -p /root/vscode
 WORKDIR /root/vscode
+
+ENV AS=/usr/bin/powerpc64le-linux-gnu-as \
+  AR=/usr/bin/powerpc64le-linux-gnu-ar \
+  CC=/usr/bin/powerpc64le-linux-gnu-gcc-8 \
+  CPP=/usr/bin/powerpc64le-linux-gnu-cpp-8 \
+  CXX=/usr/bin/powerpc64le-linux-gnu-g++-8 \
+  LD=/usr/bin/powerpc64le-linux-gnu-ld \
+  PKG_CONFIG_PATH=/usr/lib/powerpc64le-linux-gnu/pkgconfig

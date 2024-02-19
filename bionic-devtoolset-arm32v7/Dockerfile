@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   gnupg \
   unzip \
   # VSCodium
+  software-properties-common \
   jq
 
 # Set python3 as default

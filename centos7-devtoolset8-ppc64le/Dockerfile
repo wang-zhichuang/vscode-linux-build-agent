@@ -11,6 +11,7 @@ ARG INSTALL_PKGS="devtoolset-8-gcc \
     libsecret-devel \
     krb5-devel \
     python3"
+ARG NODE_VERSION="16.20.2"
 
 # setup dependencies
 RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
@@ -19,7 +20,7 @@ RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
 
 # setup nodejs repo
 RUN curl -L -O https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-ppc64le.tar.gz && \
-    tar -xzf node-v${NODE_VERSION}-linux-armv7l.tar.gz && \
+    tar -xzf node-v${NODE_VERSION}-linux-ppc64le.tar.gz && \
     cd node-v${NODE_VERSION}-linux-ppc64le && \
     cp -R * /usr/local/ && \
     cd .. && \

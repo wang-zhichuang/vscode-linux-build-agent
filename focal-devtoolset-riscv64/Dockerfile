@@ -3,7 +3,7 @@ ARG TAG=20.04
 FROM ${REPO}:${TAG}
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NODE_VERSION="18.20.1"
+ARG NODE_VERSION="18.18.1"
 
 # ubuntu keeps its i386/amd64 and other architecture repos separate
 # the default i386/amd64 packages can be found in http://archive.ubuntu.com while all other architectures are in http://ports.ubuntu.com/
@@ -44,9 +44,7 @@ RUN python --version
 # setup Node.js
 RUN curl -L -O https://unofficial-builds.nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-riscv64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-riscv64.tar.gz && \
-    cd node-v${NODE_VERSION}-linux-riscv64 && \
-    cp -R * /usr/local/ && \
-    cd .. && \
+    cp -R node-v${NODE_VERSION}-linux-riscv64/* /usr/local/ && \
     rm -rf node-v${NODE_VERSION}-linux-riscv64* && \
     node --version
 

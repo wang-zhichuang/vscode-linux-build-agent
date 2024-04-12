@@ -37,17 +37,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   # VSCodium
   jq
 
-# Set python3 as default
+# set python3 as default
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN python --version
 
-# Setup Node.js
+# setup Node.js
 RUN curl -L -O https://unofficial-builds.nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-riscv64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-riscv64.tar.gz && \
-    cp -R node-v${NODE_VERSION}-linux-riscv64/* /usr/local/ && \
+    cd node-v${NODE_VERSION}-linux-riscv64 && \
+    cp -R * /usr/local/ && \
+    cd .. && \
     rm -rf node-v${NODE_VERSION}-linux-riscv64* && \
-    node --version && \
-    npm install -g yarn
+    node --version
+
+# install yarn & node-gyp
+RUN npm install -g yarn node-gyp
 
 RUN mkdir -p /root/vscode
 WORKDIR /root/vscode

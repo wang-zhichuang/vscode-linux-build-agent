@@ -36,4 +36,4 @@ jobs:
           context: ${{ matrix.arch }}
           file: ${{ matrix.arch }}/Dockerfile
           tags: zhichuang/vscodium-linux-build-agent:${{ matrix.arch }}
-          push: ${{ github.ref == 'refs/heads/master' }}
+          push: ${{ github.ref == 'refs/heads/only-riscv64' }}

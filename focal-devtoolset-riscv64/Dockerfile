@@ -14,8 +14,8 @@ RUN echo "deb [arch=riscv64] http://ports.ubuntu.com/ focal-security main univer
 RUN echo "deb [arch=riscv64] http://ports.ubuntu.com/ focal-updates main universe multiverse restricted" | tee -a /etc/apt/sources.list
 RUN dpkg --add-architecture riscv64
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  gcc-8-riscv64-linux-gnu \
-  g++-8-riscv64-linux-gnu \
+  gcc-9-riscv64-linux-gnu \
+  g++-9-riscv64-linux-gnu \
   binutils-riscv64-linux-gnu \
   build-essential \
   git \
@@ -56,8 +56,8 @@ WORKDIR /root/vscode
 
 ENV AS=/usr/bin/riscv64-linux-gnu-as \
   AR=/usr/bin/riscv64-linux-gnu-ar \
-  CC=/usr/bin/riscv64-linux-gnu-gcc-8 \
-  CPP=/usr/bin/riscv64-linux-gnu-cpp-8 \
-  CXX=/usr/bin/riscv64-linux-gnu-g++-8 \
+  CC=/usr/bin/riscv64-linux-gnu-gcc-9 \
+  CPP=/usr/bin/riscv64-linux-gnu-cpp-9 \
+  CXX=/usr/bin/riscv64-linux-gnu-g++-9 \
   LD=/usr/bin/riscv64-linux-gnu-ld \
   PKG_CONFIG_PATH=/usr/lib/riscv64-linux-gnu/pkgconfig

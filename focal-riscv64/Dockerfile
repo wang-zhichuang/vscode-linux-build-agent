@@ -17,8 +17,8 @@ RUN echo "deb [arch=riscv64] http://ports.ubuntu.com/ focal-security main univer
 RUN echo "deb [arch=riscv64] http://ports.ubuntu.com/ focal-updates main universe multiverse restricted" | tee -a /etc/apt/sources.list
 RUN dpkg --add-architecture riscv64
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  gcc-8-riscv64-linux-gnu \
-  g++-8-riscv64-linux-gnu \
+  gcc-9-riscv64-linux-gnu \
+  g++-9-riscv64-linux-gnu \
   binutils-aarch64-linux-gnu \
   build-essential \
   git \
